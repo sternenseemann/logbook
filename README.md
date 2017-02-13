@@ -2,36 +2,6 @@ logbook — tool for personal log files
 -------------------------------------------------------------------------------
 %%VERSION%%
 
-logbook is TODO
+logbook is a small tool for dealing with log files, which were first [specified by Profpatsch](https://gist.github.com/Profpatsch/092ff68fa267b9fa0ccbe13e98149b21) (sadly only in german, I will add a translation as soon as possible).
 
-logbook is distributed under the ISC license.
-
-Homepage: https://sternen.space/ocaml/logbook  
-
-## Installation
-
-logbook can be installed with `opam`:
-
-    opam install logbook
-
-If you don't use `opam` consult the [`opam`](opam) file for build
-instructions.
-
-## Documentation
-
-The documentation and API reference is generated from the source
-interfaces. It can be consulted [online][doc] or via `odig doc
-logbook`.
-
-[doc]: https://sternen.space/logbook/doc
-
-## Sample programs
-
-If you installed logbook with `opam` sample programs are located in
-the directory `opam var logbook:doc`.
-
-In the distribution sample programs and tests are located in the
-[`test`](test) directory of the distribution. They can be built and run
-with:
-
-    topkg build --tests true && topkg test 
+Parsing and Representation of log files works at the moment, more to come!
