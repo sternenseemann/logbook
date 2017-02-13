@@ -10,7 +10,7 @@ type privacy_level = Private | Semi_private | Public
 
 let compatible_privacy x mode =
   match mode with
-  | Private -> true (* who may see private post, may see all posts *)
+  | Private -> true (* who may see private posts, may see all posts *)
   | Semi_private -> x = Semi_private || x = Public
   | Public -> x = Public
 
@@ -54,7 +54,6 @@ let rec fail_if_none p =
     | Some x -> return x
   in p >>= failer
 
-(* TODO rework *)
 let rec block indent =
   let peeker = function
     | None -> false
@@ -68,7 +67,6 @@ let rec block indent =
         if (peeker c) then (String.append "\n") <$> block indent
         else return ""))
 
-(* TODO substitution *)
 let itemp =
   fail_if_none (privacy_level_of_char <$> any_char) <*
   any_char
@@ -90,6 +88,12 @@ let log_entryp =
         return (Log_entry (date, summary, items)))))
 
 
+(* Parser TODO
+ * - test edge cases (omitted, added parts, empty lines etc.)
+ * - substitutions
+ * - clean up block parser
+ * …
+ *)
 let log_parser =
   (editor_comment <|> return ()) *>
   skip_many empty_line *>
