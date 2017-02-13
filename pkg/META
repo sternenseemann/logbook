@@ -1,0 +1,7 @@
+description = "tool for personal log files"
+version = "%%VERSION_NUM%%"
+requires = "ptime angstrom astring"
+archive(byte) = "logbook.cma"
+archive(native) = "logbook.cmxa"
+plugin(byte) = "logbook.cma"
+plugin(native) = "logbook.cmxs"

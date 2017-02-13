@@ -1,0 +1,22 @@
+opam-version: "1.2"
+maintainer: "sternenseemann <post@lukasepple.de>"
+authors: ["sternenseemann <post@lukasepple.de>"]
+homepage: "https://sternen.space/ocaml/logbook"
+doc: "https://sternen.space/logbook/doc"
+license: "ISC"
+dev-repo: "https://sternen.space/ocaml/logbook.git"
+bug-reports: "https://sternen.space/ocaml/logbook/issues"
+tags: []
+available: [ ocaml-version >= "4.01.0"]
+depends: [
+  "ocamlfind" {build}
+  "ocamlbuild" {build}
+  "topkg" {build} 
+  "ptime"
+  "angstrom"
+  "astring"
+  ]
+depopts: []
+build: [
+  "ocaml" "pkg/pkg.ml" "build"
+          "--pinned" pinned ]
