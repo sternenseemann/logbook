@@ -6,3 +6,5 @@ tmp
 *.install
 *.native
 *.byte
+# nix
+result
