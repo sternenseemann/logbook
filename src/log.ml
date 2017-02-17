@@ -22,6 +22,9 @@ let privacy_level_of_char = function
 
 type item = Item of privacy_level * string * string
 
+let filter_privacy_level mode items =
+  List.filter (fun (Item (p, _, _)) -> compatible_privacy p mode) items
+
 type log_entry = Log_entry of Ptime.date * string * item list
 
 type log = log_entry list
@@ -75,9 +78,10 @@ let log_entryp =
   <*> (skip_many empty_line *> spaced_list itemp)
 
 (* Parser TODO
- * - test edge cases (omitted, added parts, empty lines etc.)
  * - substitutions
- * - clean up block parser
+ * - markdown/other markup
+ * - proper failure if not
+ *   the whole output is consumed
  * …
  *)
 let log_parser =

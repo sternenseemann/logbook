@@ -14,10 +14,15 @@ The 42nd day of the year.
 
 + Public information.
   foo bar
-
 - Private information.
   Additional block
-
 * Semi-private information.
   More text!
+```
+
+## Installation & Usage
+
+```
+opam pin add logbook https://gitlab.glaxx.net/sternenseemann/logbook.git
+logbook --file example.log [ --private | --public | --semi-private ]
 ```

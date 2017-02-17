@@ -32,6 +32,8 @@ val compatible_privacy : privacy_level -> privacy_level -> bool
 (** Get the corresponding privacy level for a char *)
 val privacy_level_of_char : char -> privacy_level option
 
+val filter_privacy_level : privacy_level -> item list -> item list
+
 (** {2 Log Parsing} 
 
     log files are parsed using {{:https://github.com/inhabitedtype/angstrom}angstrom}.

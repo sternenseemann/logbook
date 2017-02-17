@@ -1,9 +1,17 @@
 [2017-02-14]
-Test
+Got the log parser into a working state
 
-+ Hi this is a test
-  Hi?
-  Is this working?
++ Implemented Angstrom parsers
+  Still kinda ugly and not perfect, need a bit of work.
+- This is private
+  Well not really, just testing this out…
 
-- private
-  foobar?
+[2017-02-17]
+Implemented logbook cli
+
++ Open & parse file with Lwt
+  Why is it so hard to even open a file in OCaml?
++ Reworked parser
+  I applied more applicative style, making the parser much better.
+  Also I fixed an annoying bug, where you could not omit the empty line between items.
+  Still not working are substitutes and proper failure whilst parsing.

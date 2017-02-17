@@ -5,4 +5,5 @@ open Topkg
 
 let () =
   Pkg.describe "logbook" @@ fun c ->
-  Ok [ Pkg.mllib "src/log.mllib"; ]
+  Ok [ Pkg.mllib "src/log.mllib";
+       Pkg.bin "src/logbook" ~dst:"logbook"; ]
