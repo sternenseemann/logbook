@@ -16,6 +16,5 @@ let model_of_log level log =
         ("date", Tstr (string_of_date date));
         ("items", Tlist (data_model_of_items level items));
       ])
-    log))
-  ]
+    log)) ]
 

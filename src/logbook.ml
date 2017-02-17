@@ -19,7 +19,7 @@ let arglist =
     "set privacy level of output to semi-private");
   ]
 
-let usage = Sys.argv.(0) ^ " --file [file.log] [other args]"
+let usage = Sys.argv.(0) ^ " --file [file.log] [--public | --private | --semi-private]"
 
 let _ =
   Arg.parse arglist (fun _ -> ()) usage;
