@@ -54,7 +54,7 @@ let rec block indent =
   let checkforblock = function
     | None -> false
     | Some '\n' -> false
-    | Some _ -> true
+    | Some c -> if indent > 0 then c = ' ' else true
   in String.append
     <$> (count indent (char ' ') *> non_empty_line)
     <*> (peek_char
