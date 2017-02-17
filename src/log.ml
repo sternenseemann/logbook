@@ -31,19 +31,15 @@ type log = log_entry list
 let empty_line = end_of_line
 let non_empty_line = take_while1 (fun c -> c != '\n') <* end_of_line
 
-let editor_comment = string "-*-" *> skip_while (fun c -> c != '\n') *> end_of_line
-
-let single_indent = count 4 (char ' ') *> return ()
+let editor_comment = string "-*-"
+  *> skip_while (fun c -> c != '\n')
+  *> end_of_line
 
 let date =
-  char '[' *>
-  take_till (fun c -> c = '-') <* char '-'
-  >>= (fun year ->
-    take 2 <* char '-'
-    >>= (fun month ->
-      take 2 <* char ']' <* end_of_line
-      >>= (fun day ->
-        return (int_of_string year, int_of_string month, int_of_string day))))
+  (fun y m d -> (int_of_string y, int_of_string m, int_of_string d))
+  <$> (char '[' *> take_till (fun c -> c = '-') <* char '-')
+  <*> (take 2 <* char '-')
+  <*> (take 2 <* char ']' <* end_of_line)
 
 let spaced_list p =
   many (p <* skip_many empty_line)
@@ -55,38 +51,28 @@ let rec fail_if_none p =
   in p >>= failer
 
 let rec block indent =
-  let peeker = function
+  let checkforblock = function
     | None -> false
     | Some '\n' -> false
     | Some _ -> true
   in String.append
-    <$> (count indent (char ' ')
-         *> non_empty_line)
+    <$> (count indent (char ' ') *> non_empty_line)
     <*> (peek_char
       >>= (fun c ->
-        if (peeker c) then (String.append "\n") <$> block indent
+        if (checkforblock c) then (String.append "\n") <$> block indent
         else return ""))
 
 let itemp =
-  fail_if_none (privacy_level_of_char <$> any_char) <*
-  any_char
-  >>= (fun priv ->
-    non_empty_line
-    >>= (fun title ->
-      block 2
-      >>= (fun text ->
-        return (Item (priv, title, text)))))
+  (fun p tt tx -> Item (p, tt, tx))
+  <$> (fail_if_none (privacy_level_of_char <$> any_char) <* char ' ')
+  <*> non_empty_line
+  <*> block 2
 
 let log_entryp =
-  date <* skip_many empty_line
-  >>= (fun date ->
-    block 0
-    >>= (fun summary ->
-      skip_many empty_line *>
-      spaced_list itemp
-      >>= (fun items ->
-        return (Log_entry (date, summary, items)))))
-
+  (fun d s i -> Log_entry (d, s, i))
+  <$> (date <* skip_many empty_line)
+  <*> block 0
+  <*> (skip_many empty_line *> spaced_list itemp)
 
 (* Parser TODO
  * - test edge cases (omitted, added parts, empty lines etc.)
