@@ -17,24 +17,26 @@
 <tr><td align="left"><br>I</td></tr>
 <tr><td><a href="Log.html#TYPEitem">item</a> [<a href="Log.html">Log</a>]</td>
 <td><div class="info">
-A log item consisting of a title, a text (formatting/markup unknown) and its privacy level.
+A log item consisting of its privacy level, a title and a text, both in markup <code class="code"><span class="keywordsign">'</span>a</code>.
 </div>
 </td></tr>
 <tr><td align="left"><br>L</td></tr>
 <tr><td><a href="Log.html#TYPElog">log</a> [<a href="Log.html">Log</a>]</td>
 <td><div class="info">
-A log file consisting of multiple log entries for multiple days
+A log file consisting of multiple log entries for multiple days using markup <code class="code"><span class="keywordsign">'</span>a</code>.
 </div>
 </td></tr>
 <tr><td><a href="Log.html#TYPElog_entry">log_entry</a> [<a href="Log.html">Log</a>]</td>
 <td><div class="info">
-A log entry consisting of a date (point in time is sufficient, so Ptime is used), a summary and items
+A log entry consisting of a date, a summary and items, both in markup <code class="code"><span class="keywordsign">'</span>a</code>.
 </div>
 </td></tr>
 <tr><td align="left"><br>P</td></tr>
 <tr><td><a href="Log.html#TYPEprivacy_level">privacy_level</a> [<a href="Log.html">Log</a>]</td>
 <td><div class="info">
-Describes, how private a log item is.
+Describes, how private a log item is, where private means
+    “item only visible to oneself, semi-private “item visible to trusted persons”
+    and public “item visible to everyone”.
 </div>
 </td></tr>
 </table>

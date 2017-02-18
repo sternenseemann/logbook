@@ -12,6 +12,7 @@
 <link title="Log" rel="Chapter" href="Log.html"><link title="Log" rel="Section" href="#1_Log">
 <link title="Log Representation" rel="Subsection" href="#2_LogRepresentation">
 <link title="Log Parsing" rel="Subsection" href="#2_LogParsing">
+<link title="Log processing" rel="Subsection" href="#2_Logprocessing">
 <link title="Log Building" rel="Subsection" href="#2_LogBuilding">
 <title>Log</title>
 </head>
@@ -25,7 +26,7 @@ OCaml representation and parsing of the
     <a href="https://gist.github.com/Profpatsch/092ff68fa267b9fa0ccbe13e98149b21">log format</a>.
 <p>
 
-    <em>84a3c76 — <a href="https://github.com/sternenseemann/logbook ">homepage</a></em><br>
+    <em>5187718 — <a href="https://github.com/sternenseemann/logbook ">homepage</a></em><br>
 </div>
 <hr width="100%">
 <br>
@@ -57,41 +58,43 @@ OCaml representation and parsing of the
 </tr></table>
 
 <div class="info ">
-Describes, how private a log item is. Semi-private means “visible to trusted persons”<br>
+Describes, how private a log item is, where private means
+    “item only visible to oneself, semi-private “item visible to trusted persons”
+    and public “item visible to everyone”.<br>
 </div>
 
 
-<pre><code><span id="TYPEitem"><span class="keyword">type</span> <code class="type"></code>item</span> = </code></pre><table class="typetable">
+<pre><code><span id="TYPEitem"><span class="keyword">type</span> <code class="type">'a</code> item</span> = </code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTitem.Item"><span class="constructor">Item</span></span> <span class="keyword">of</span> <code class="type"><a href="Log.html#TYPEprivacy_level">privacy_level</a> * string * string</code></code></td>
+<code><span id="TYPEELTitem.Item"><span class="constructor">Item</span></span> <span class="keyword">of</span> <code class="type"><a href="Log.html#TYPEprivacy_level">privacy_level</a> * 'a * 'a</code></code></td>
 
 </tr></table>
 
 <div class="info ">
-A log item consisting of a title, a text (formatting/markup unknown) and its privacy level.<br>
+A log item consisting of its privacy level, a title and a text, both in markup <code class="code"><span class="keywordsign">'</span>a</code>.<br>
 </div>
 
 
-<pre><code><span id="TYPElog_entry"><span class="keyword">type</span> <code class="type"></code>log_entry</span> = </code></pre><table class="typetable">
+<pre><code><span id="TYPElog_entry"><span class="keyword">type</span> <code class="type">'a</code> log_entry</span> = </code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTlog_entry.Log_entry"><span class="constructor">Log_entry</span></span> <span class="keyword">of</span> <code class="type">Ptime.date * string * <a href="Log.html#TYPEitem">item</a> list</code></code></td>
+<code><span id="TYPEELTlog_entry.Log_entry"><span class="constructor">Log_entry</span></span> <span class="keyword">of</span> <code class="type">Ptime.date * 'a * 'a <a href="Log.html#TYPEitem">item</a> list</code></code></td>
 
 </tr></table>
 
 <div class="info ">
-A log entry consisting of a date (point in time is sufficient, so Ptime is used), a summary and items<br>
+A log entry consisting of a date, a summary and items, both in markup <code class="code"><span class="keywordsign">'</span>a</code>.<br>
 </div>
 
 
-<pre><span id="TYPElog"><span class="keyword">type</span> <code class="type"></code>log</span> = <code class="type"><a href="Log.html#TYPElog_entry">log_entry</a> list</code> </pre>
+<pre><span id="TYPElog"><span class="keyword">type</span> <code class="type">'a</code> log</span> = <code class="type">'a <a href="Log.html#TYPElog_entry">log_entry</a> list</code> </pre>
 <div class="info ">
-A log file consisting of multiple log entries for multiple days<br>
+A log file consisting of multiple log entries for multiple days using markup <code class="code"><span class="keywordsign">'</span>a</code>.<br>
 </div>
 
 
@@ -104,14 +107,25 @@ A test to check wether a privacy level of e. g. an item is
 Get the corresponding privacy level for a char<br>
 </div>
 
-<pre><span id="VALfilter_privacy_level"><span class="keyword">val</span> filter_privacy_level</span> : <code class="type"><a href="Log.html#TYPEprivacy_level">privacy_level</a> -> <a href="Log.html#TYPEitem">item</a> list -> <a href="Log.html#TYPEitem">item</a> list</code></pre><br>
+<pre><span id="VALfilter_privacy_level"><span class="keyword">val</span> filter_privacy_level</span> : <code class="type"><a href="Log.html#TYPEprivacy_level">privacy_level</a> -> 'a <a href="Log.html#TYPEitem">item</a> list -> 'a <a href="Log.html#TYPEitem">item</a> list</code></pre><div class="info ">
+Remove all items incompatible with the given privacy level
+    from the list of items.<br>
+</div>
+<br>
 <h2 id="2_LogParsing">Log Parsing</h2> 
 <p>
 
     log files are parsed using <a href="https://github.com/inhabitedtype/angstrom">angstrom</a>.<br>
 
-<pre><span id="VALlog_parser"><span class="keyword">val</span> log_parser</span> : <code class="type"><a href="Log.html#TYPElog">log</a> Angstrom.t</code></pre><div class="info ">
+<pre><span id="VALlog_parser"><span class="keyword">val</span> log_parser</span> : <code class="type">string <a href="Log.html#TYPElog">log</a> Angstrom.t</code></pre><div class="info ">
 An angstrom parser for log files<br>
+</div>
+<br>
+<h2 id="2_Logprocessing">Log processing</h2><br>
+
+<pre><span id="VALapply_markup"><span class="keyword">val</span> apply_markup</span> : <code class="type">('a -> 'b) -> 'a <a href="Log.html#TYPElog">log</a> -> 'b <a href="Log.html#TYPElog">log</a></code></pre><div class="info ">
+Convert a log's markup. This is especially useful
+    to apply a specific markup to a freshly parsed log file.<br>
 </div>
 <br>
 <h2 id="2_LogBuilding">Log Building</h2><br>
