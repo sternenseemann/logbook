@@ -7,7 +7,7 @@ license: "ISC"
 dev-repo: "https://sternen.space/ocaml/logbook.git"
 bug-reports: "https://sternen.space/ocaml/logbook/issues"
 tags: []
-available: [ ocaml-version >= "4.01.0"]
+available: [ ocaml-version >= "4.02.0" ]
 depends: [
   "ocamlfind" {build}
   "ocamlbuild" {build}
@@ -22,4 +22,3 @@ depopts: []
 build: [
   "ocaml" "pkg/pkg.ml" "build"
           "--pinned" pinned ]
-available: [ ocaml-version >= "4.02.0" ]
