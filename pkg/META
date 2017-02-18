@@ -1,6 +1,6 @@
 description = "tool for personal log files"
 version = "%%VERSION_NUM%%"
-requires = "ptime angstrom astring lwt jingoo"
+requires = "ptime angstrom astring lwt jingoo omd"
 archive(byte) = "logbook.cma"
 archive(native) = "logbook.cmxa"
 plugin(byte) = "logbook.cma"

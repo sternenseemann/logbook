@@ -13,17 +13,19 @@
 
 (** {2 Log Representation} *)
 
-(** Describes, how private a log item is. Semi-private means “visible to trusted persons” *)
+(** Describes, how private a log item is, where private means
+    “item only visible to oneself, semi-private “item visible to trusted persons”
+    and public “item visible to everyone”. *)
 type privacy_level = Private | Semi_private | Public
 
-(** A log item consisting of a title, a text (formatting/markup unknown) and its privacy level. *)
-type item = Item of privacy_level * string * string
+(** A log item consisting of its privacy level, a title and a text, both in markup ['a].  *)
+type 'a item = Item of privacy_level * 'a * 'a
 
-(** A log entry consisting of a date (point in time is sufficient, so Ptime is used), a summary and items *)
-type log_entry = Log_entry of Ptime.date * string * item list
+(** A log entry consisting of a date, a summary and items, both in markup ['a]. *)
+type 'a log_entry = Log_entry of Ptime.date * 'a * ('a item) list
 
-(** A log file consisting of multiple log entries for multiple days *)
-type log = log_entry list
+(** A log file consisting of multiple log entries for multiple days using markup ['a]. *)
+type 'a log = ('a log_entry) list
 
 (** A test to check wether a privacy level of e. g. an item is
     compatible with the (maximum) privacy level available. *)
@@ -32,7 +34,9 @@ val compatible_privacy : privacy_level -> privacy_level -> bool
 (** Get the corresponding privacy level for a char *)
 val privacy_level_of_char : char -> privacy_level option
 
-val filter_privacy_level : privacy_level -> item list -> item list
+(** Remove all items incompatible with the given privacy level
+    from the list of items. *)
+val filter_privacy_level : privacy_level -> ('a item) list -> ('a item) list
 
 (** {2 Log Parsing} 
 
@@ -40,7 +44,13 @@ val filter_privacy_level : privacy_level -> item list -> item list
 *)
 
 (** An angstrom parser for log files *)
-val log_parser : log Angstrom.t
+val log_parser : (string log) Angstrom.t
+
+(** {2 Log processing} *)
+
+(** Convert a log's markup. This is especially useful
+    to apply a specific markup to a freshly parsed log file. *)
+val apply_markup : ('a -> 'b) -> 'a log -> 'b log
 
 (** {2 Log Building} *)
 

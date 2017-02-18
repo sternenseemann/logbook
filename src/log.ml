@@ -20,14 +20,14 @@ let privacy_level_of_char = function
   | '*' -> Some Semi_private
   | _   -> None
 
-type item = Item of privacy_level * string * string
+type 'a item = Item of privacy_level * 'a * 'a
 
 let filter_privacy_level mode items =
   List.filter (fun (Item (p, _, _)) -> compatible_privacy p mode) items
 
-type log_entry = Log_entry of Ptime.date * string * item list
+type 'a log_entry = Log_entry of Ptime.date * 'a * ('a item) list
 
-type log = log_entry list
+type 'a log = ('a log_entry) list
 
 (* parser *)
 
@@ -88,6 +88,15 @@ let log_parser =
   (editor_comment <|> return ()) *>
   skip_many empty_line *>
   spaced_list log_entryp
+
+(* processing *)
+
+let apply_markup markup log =
+  let apply_items items =
+    List.map (fun (Item (priv, title, block)) ->
+      Item (priv, (markup title), (markup block))) items in
+  List.map (fun (Log_entry (date, summary, items)) ->
+    Log_entry (date, (markup summary), (apply_items items))) log
 
 (*---------------------------------------------------------------------------
    Copyright (c) 2017 sternenseemann

@@ -8,6 +8,7 @@ let parse_file f =
 
 let input_file = ref None
 let privacy = ref Log.Public
+let markup = ref (fun s -> Cow_html.p (Cow_html.string s))
 
 let arglist =
   [ ("--file", Arg.String (fun f -> input_file := Some f), "log file to use");
@@ -17,9 +18,14 @@ let arglist =
     "set privacy level of output to public");
     ("--semi-private", Arg.Unit (fun () -> privacy := Log.Semi_private),
     "set privacy level of output to semi-private");
+    ("--markdown", Arg.Unit (fun () -> markup := Cow_markdown.of_string),
+    "enable markdown markup");
   ]
 
-let usage = Sys.argv.(0) ^ " --file [file.log] [--public | --private | --semi-private]"
+let usage =
+  Sys.argv.(0) ^ " --file [file.log]" ^
+  " [--public | --private | --semi-private]" ^
+  " [--markdown]"
 
 let _ =
   Arg.parse arglist (fun _ -> ()) usage;
@@ -29,6 +35,9 @@ let _ =
       match log with
       | Result.Error msg -> failwith msg
       | Result.Ok log -> return log)
+  in
+  let log_markup =
+    Log.apply_markup (fun x -> Cow_xml.to_string ~decl:false (!markup x)) log
   in print_string (Jg_template.from_string
     Logbook_template.template
-    ~models:(Logbook_models.model_of_log !privacy log))
+    ~models:(Logbook_models.model_of_log !privacy log_markup))
