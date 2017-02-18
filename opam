@@ -1,11 +1,11 @@
 opam-version: "1.2"
 maintainer: "sternenseemann <post@lukasepple.de>"
 authors: ["sternenseemann <post@lukasepple.de>"]
-homepage: "https://sternen.space/ocaml/logbook"
-doc: "https://sternen.space/logbook/doc"
+homepage: "https://github.com/sternenseemann/logbook"
+doc: "https://sternenseemann.github.io/logbook/doc"
 license: "ISC"
-dev-repo: "https://sternen.space/ocaml/logbook.git"
-bug-reports: "https://sternen.space/ocaml/logbook/issues"
+dev-repo: "https://github.com/sternenseemann/logbook.git"
+bug-reports: "https://github.com/sternenseemann/logbook/issues"
 tags: []
 available: [ ocaml-version >= "4.02.0" ]
 depends: [
