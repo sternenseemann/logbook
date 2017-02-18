@@ -23,6 +23,6 @@ The 42nd day of the year.
 ## Installation & Usage
 
 ```
-opam pin add logbook https://gitlab.glaxx.net/sternenseemann/logbook.git
+opam pin add logbook https://github.com/sternenseemann/logbook.git
 logbook --file example.log [ --private | --public | --semi-private ]
 ```
