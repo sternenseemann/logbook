@@ -4,7 +4,7 @@ open Lwt.Infix
 let parse_file f =
   Lwt_io.with_file Lwt_io.Input f (fun c ->
     Lwt_io.read c >>= (fun s ->
-      return (Angstrom.parse_only Log.log_parser (`String s))))
+      return (Angstrom.parse_string Log.log_parser s)))
 
 let input_file = ref None
 let privacy = ref Log.Public
