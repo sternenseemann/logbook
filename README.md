@@ -20,9 +20,8 @@ The 42nd day of the year.
   More text!
 ```
 
-## Installation & Usage
+## Usage
 
 ```
-opam pin add logbook https://github.com/sternenseemann/logbook.git
 logbook --file example.log [ --private | --public | --semi-private ]
 ```

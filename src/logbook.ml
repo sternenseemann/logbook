@@ -2,7 +2,7 @@ open Lwt
 open Lwt.Infix
 
 let parse_file f =
-  Lwt_io.with_file Lwt_io.Input f (fun c ->
+  Lwt_io.with_file ~mode:Lwt_io.Input f (fun c ->
     Lwt_io.read c >>= (fun s ->
       return (Angstrom.parse_string Log.log_parser s)))
 

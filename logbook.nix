@@ -1,15 +1,12 @@
-{ stdenv, ocaml, topkg, ocamlbuild, findlib, ocaml_lwt
-, jingoo, ptime, angstrom, astring, opam, cow}:
+{ buildDunePackage, ocaml_lwt, jingoo, ptime, angstrom, astring, cow}:
 
-stdenv.mkDerivation rec {
-  version = "0.1";
-  name = "ocaml${ocaml.version}-logbook-${version}";
+buildDunePackage rec {
+  version = "0.2";
+  pname = "logbook";
 
   src = ./.;
 
-  buildInputs = [ ocaml findlib ocamlbuild topkg opam cow
-                  ocaml_lwt jingoo ptime angstrom astring
-                ];
+  buildInputs = [ cow ocaml_lwt jingoo ptime angstrom astring ];
 
-  inherit (topkg) buildPhase installPhase;
+  useDune2 = true;
 }

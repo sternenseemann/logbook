@@ -47,7 +47,7 @@ let date =
 let spaced_list p =
   many (p <* skip_many empty_line)
 
-let rec fail_if_none p =
+let fail_if_none p =
   let failer = function
     | None -> fail "Value is None"
     | Some x -> return x

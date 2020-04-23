@@ -1,0 +1,11 @@
+(library
+  (name log)
+  (public_name logbook)
+  (libraries bytes ptime angstrom astring)
+  (modules log))
+
+(executable
+  (name logbook)
+  (public_name logbook)
+  (libraries logbook lwt lwt.unix jingoo cow)
+  (modules logbook logbook_template logbook_models))
