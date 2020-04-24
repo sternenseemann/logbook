@@ -1,5 +1,6 @@
 open Lwt
 open Lwt.Infix
+open Cow
 
 let parse_file f =
   Lwt_io.with_file ~mode:Lwt_io.Input f (fun c ->
@@ -8,7 +9,7 @@ let parse_file f =
 
 let input_file = ref None
 let privacy = ref Log.Public
-let markup = ref (fun s -> Cow_html.p (Cow_html.string s))
+let markup = ref (fun s -> Html.p (Html.string s))
 
 let arglist =
   [ ("--file", Arg.String (fun f -> input_file := Some f), "log file to use");
@@ -18,7 +19,7 @@ let arglist =
     "set privacy level of output to public");
     ("--semi-private", Arg.Unit (fun () -> privacy := Log.Semi_private),
     "set privacy level of output to semi-private");
-    ("--markdown", Arg.Unit (fun () -> markup := Cow_markdown.of_string),
+    ("--markdown", Arg.Unit (fun () -> markup := Markdown.of_string),
     "enable markdown markup");
   ]
 
@@ -37,7 +38,7 @@ let _ =
       | Result.Ok log -> return log)
   in
   let log_markup =
-    Log.apply_markup (fun x -> Cow_xml.to_string ~decl:false (!markup x)) log
+    Log.apply_markup (fun x -> Xml.to_string ~decl:false (!markup x)) log
   in print_string (Jg_template.from_string
     Logbook_template.template
     ~models:(Logbook_models.model_of_log !privacy log_markup))
