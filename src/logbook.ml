@@ -10,6 +10,7 @@ let parse_file f =
 let input_file = ref None
 let privacy = ref Log.Public
 let markup = ref (fun s -> Html.p (Html.string s))
+let title = ref "log"
 
 let arglist =
   [ ("--file", Arg.String (fun f -> input_file := Some f), "log file to use");
@@ -21,6 +22,7 @@ let arglist =
     "set privacy level of output to semi-private");
     ("--markdown", Arg.Unit (fun () -> markup := Markdown.of_string),
     "enable markdown markup");
+    ("--title", Arg.String (fun f -> title := f), "title of the generated html document");
   ]
 
 let usage =
@@ -41,4 +43,4 @@ let _ =
     Log.apply_markup (fun x -> Xml.to_string ~decl:false (!markup x)) log
   in print_string (Jg_template.from_string
     Logbook_template.template
-    ~models:(Logbook_models.model_of_log !privacy log_markup))
+    ~models:(Logbook_models.model_of_log !title !privacy log_markup))

@@ -8,8 +8,9 @@ let data_model_of_items mode items =
   |> List.map (fun (Log.Item (_, tt, tx)) ->
       Tobj [ ("title", Tstr tt); ("text", Tstr tx); ])
 
-let model_of_log level log =
-  [ ("entries", Tlist (List.map
+let model_of_log title level log =
+  [ ("title", Tstr title);
+    ("entries", Tlist (List.map
     (fun (Log.Log_entry (date, summary, items)) ->
       Tobj [
         ("summary", Tstr summary);
