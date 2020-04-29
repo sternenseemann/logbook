@@ -8,7 +8,7 @@ let template = "<!doctype html>
   <main>
     <h1>log</h1>
     {% for entry in entries %}
-    <article>
+    <article id=\"{{ entry.date }}\">
       <h2>{{ entry.date }}</h2>
       {% autoescape false %}
       {{ entry.summary }}
