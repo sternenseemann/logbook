@@ -8,4 +8,4 @@ tmp
 *.byte
 # nix
 result
-src/.merlin
+.merlin
