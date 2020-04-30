@@ -1,19 +1,40 @@
-open Lwt
+open Stdlib
 open Lwt.Infix
 open Cow
 
 let parse_file f =
   let file_parser c =
     Lwt_io.read c >>= (fun s ->
-      return (Angstrom.parse_string ~consume:All Log.log_parser s))
+      Lwt.return (Result.map_error (fun e -> "Parse error:" ^ e)
+                   (Angstrom.parse_string ~consume:All Log.log_parser s)))
   in match f with
      | None -> file_parser Lwt_io.stdin
-     | Some filename -> Lwt_io.with_file ~mode:Lwt_io.Input filename file_parser
+     | Some filename ->
+         try (Lwt_io.with_file ~mode:Lwt_io.Input filename file_parser)
+         with Unix.Unix_error (e, _, _) ->
+           Lwt.return (Result.Error ("Failed opening file:" ^ Unix.error_message e))
+
+let get_template f =
+  match f with
+  | None -> Result.Ok Logbook_template.template
+  | Some name ->
+      try Result.Ok (Lwt_main.run (Lwt_io.with_file ~mode:Lwt_io.Input name Lwt_io.read))
+      with Unix.Unix_error (e, _, _) ->
+        Result.Error ("Failed reading template:" ^ Unix.error_message e)
+
+let html_of_log log markup template privacy title =
+  try Result.Ok (Jg_template.from_string template
+        ~models:(Logbook_models.model_of_log title privacy
+          (Log.apply_markup (fun
+            x -> Xml.to_string ~decl:false (markup x)) log)))
+     with Jg_types.SyntaxError msg ->
+       Result.Error ("Template syntax error:" ^ msg)
 
 let input_file = ref None
 let privacy = ref Log.Public
 let markup = ref (fun s -> Html.p (Html.string s))
 let title = ref "log"
+let template_file = ref None
 
 let arglist =
   [ ("--file", Arg.String (fun f -> input_file := Some f), "log file to use");
@@ -26,22 +47,20 @@ let arglist =
     ("--markdown", Arg.Unit (fun () -> markup := Markdown.of_string),
     "enable markdown markup");
     ("--title", Arg.String (fun f -> title := f), "title of the generated html document");
+    ("--template", Arg.String (fun f -> template_file := Some f), "Jingoo template to use for HTML generation");
   ]
 
 let usage =
-  Sys.argv.(0) ^ " --file [file.log]" ^
+  Sys.argv.(0) ^ " [--file <file.log>]" ^
+  " [--template <template.html.jingoo>]" ^
   " [--public | --private | --semi-private]" ^
-  " [--markdown]"
+  " [--markdown]" ^ " [--title <title>]"
 
 let _ =
   Arg.parse arglist (fun _ -> ()) usage;
-  let log = Lwt_main.run (parse_file !input_file >>= fun log ->
-      match log with
-      | Result.Error msg -> failwith ("Parse error (" ^ msg ^ ")")
-      | Result.Ok log -> return log)
-  in
-  let log_markup =
-    Log.apply_markup (fun x -> Xml.to_string ~decl:false (!markup x)) log
-  in print_string (Jg_template.from_string
-    Logbook_template.template
-    ~models:(Logbook_models.model_of_log !title !privacy log_markup))
+  let result = Result.bind (Lwt_main.run (parse_file !input_file)) (fun log ->
+    Result.bind (get_template !template_file) (fun tpl ->
+      html_of_log log !markup tpl !privacy !title))
+  in match result with
+     | Result.Ok s -> print_endline s; exit 0
+     | Result.Error e -> print_endline e; exit 1
