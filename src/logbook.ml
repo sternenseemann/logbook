@@ -5,7 +5,7 @@ open Cow
 let parse_file f =
   Lwt_io.with_file ~mode:Lwt_io.Input f (fun c ->
     Lwt_io.read c >>= (fun s ->
-      return (Angstrom.parse_string Log.log_parser s)))
+      return (Angstrom.parse_string ~consume:All Log.log_parser s)))
 
 let input_file = ref None
 let privacy = ref Log.Public
