@@ -3,9 +3,12 @@ open Lwt.Infix
 open Cow
 
 let parse_file f =
-  Lwt_io.with_file ~mode:Lwt_io.Input f (fun c ->
+  let file_parser c =
     Lwt_io.read c >>= (fun s ->
-      return (Angstrom.parse_string ~consume:All Log.log_parser s)))
+      return (Angstrom.parse_string ~consume:All Log.log_parser s))
+  in match f with
+     | None -> file_parser Lwt_io.stdin
+     | Some filename -> Lwt_io.with_file ~mode:Lwt_io.Input filename file_parser
 
 let input_file = ref None
 let privacy = ref Log.Public
@@ -32,11 +35,9 @@ let usage =
 
 let _ =
   Arg.parse arglist (fun _ -> ()) usage;
-  match !input_file with
-  | None -> print_endline "No file supplied"
-  | Some f -> let log = Lwt_main.run (parse_file f >>= fun log ->
+  let log = Lwt_main.run (parse_file !input_file >>= fun log ->
       match log with
-      | Result.Error msg -> failwith msg
+      | Result.Error msg -> failwith ("Parse error (" ^ msg ^ ")")
       | Result.Ok log -> return log)
   in
   let log_markup =
