@@ -1,7 +1,7 @@
 { buildDunePackage, ocaml_lwt, jingoo, ptime, angstrom, astring, cow}:
 
 buildDunePackage rec {
-  version = "0.2";
+  version = "0.3";
   pname = "logbook";
 
   src = ./.;

@@ -165,6 +165,15 @@ the `--template` option. For templating, `logbook` provides the following variab
 
 For an example template see [`src/logbook_template.ml`](./src/logbook_template.ml)
 
+
+## Installation
+
+* Using OPAM:
+  `opam pin add logbook https://github.com/sternenseemann/logbook.git`
+* On NixOS:
+  * Directly from `master`: `nix-env -f https://github.com/sternenseemann/logbook/archive/master.tar.gz -i` (also works with the release source tarballs!)
+  * using [vuizvui](https://github.com/openlab-aux/vuizvui): `vuizvui.pkgs.sternenseemann.logbook`
+
 ## Future Improvements
 
 A little todo list, might get to it at some point.
