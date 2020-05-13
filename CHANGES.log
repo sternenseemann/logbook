@@ -1,0 +1,13 @@
+[2020-04-24]
+v0.2
+
++ Switched to dune
+  Use the new (quasi) standard OCaml build system.
++ Fix build errors
+  Mostly related to dependencies updating and breaking their API.
+
+[2017-02-18]
+v0.1
+
++ Initial Version
+  Never really released.
