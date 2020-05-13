@@ -32,7 +32,7 @@ let html_of_log log markup template privacy title =
 
 let input_file = ref None
 let privacy = ref Log.Public
-let markup = ref (fun s -> Html.p (Html.string s))
+let markup = ref (fun s -> Html.string s)
 let title = ref "log"
 let template_file = ref None
 
@@ -46,6 +46,7 @@ let arglist =
     "set privacy level of output to semi-private");
     ("--markdown", Arg.Unit (fun () -> markup := Markdown.of_string),
     "enable markdown markup");
+    ("--paragraph", Arg.Unit (fun () -> markup := (fun s -> Html.p (Html.string s))), "Wrap summary, item titles and texts with <p>, like for example markdown does, but without applying any markup");
     ("--title", Arg.String (fun f -> title := f), "title of the generated html document");
     ("--template", Arg.String (fun f -> template_file := Some f), "Jingoo template to use for HTML generation");
   ]

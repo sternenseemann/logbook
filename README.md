@@ -136,6 +136,9 @@ omitted. The default behavior is roughly equivalent to
 
 * `--file <path>` specify input `log` file. If omitted, use stdin.
 * `--markdown` enable markdown markup.
+* `--paragraph` enables a trivial “markup” which just wraps the supplied text with `<p>`.
+  This is similar to what markdown does, so this option is intended to make templates
+  intended for markdown makeup work without a markup.
 * `--public` set privacy level to public
 * `--semi-private` set privacy level to semi private
 * `--private` set privacy level to private
