@@ -9,9 +9,12 @@ Got the log parser into a working state
 [2017-02-17]
 Implemented logbook cli
 
-+ Open & parse file with Lwt
-  Why is it so hard to even open a file in OCaml?
++ Open & parse file
+  This is done using LWT and Angstrom.
 + Reworked parser
   I applied more applicative style, making the parser much better.
   Also I fixed an annoying bug, where you could not omit the empty line between items.
-  Still not working are substitutes and proper failure whilst parsing.
+* This is a Semi Private entry
+  Again: including it in a public repository defeats its purpose.
+  
+  Above is an empty line in a block (indented using 2 spaces).
