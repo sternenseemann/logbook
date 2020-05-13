@@ -33,6 +33,9 @@ type 'a log = ('a log_entry) list
 
 let empty_line = end_of_line
 let non_empty_line = take_while1 (fun c -> c != '\n') <* end_of_line
+let line = take_while (fun c -> c != '\n') <* end_of_line
+
+let try' p = p <|> return ()
 
 let editor_comment = string "-*-"
   *> skip_while (fun c -> c != '\n')
@@ -53,16 +56,18 @@ let fail_if_none p =
     | Some x -> return x
   in p >>= failer
 
+
 let rec block indent =
-  let checkforblock = function
+  let block_continued = function
     | None -> false
     | Some '\n' -> false
     | Some c -> if indent > 0 then c = ' ' else true
-  in String.append
-    <$> (count indent (char ' ') *> non_empty_line)
+  in
+  String.append
+    <$> (count indent (char ' ') *> line)
     <*> (peek_char
       >>= (fun c ->
-        if (checkforblock c) then (String.append "\n") <$> block indent
+        if (block_continued c) then (String.append "\n") <$> block indent
         else return ""))
 
 let itemp =
@@ -75,17 +80,10 @@ let log_entryp =
   (fun d s i -> Log_entry (d, s, i))
   <$> (date <* skip_many empty_line)
   <*> block 0
-  <*> (skip_many empty_line *> spaced_list itemp)
+  <*> (skip_many empty_line *> spaced_list itemp <* skip_many empty_line)
 
-(* Parser TODO
- * - substitutions
- * - markdown/other markup
- * - proper failure if not
- *   the whole output is consumed
- * …
- *)
 let log_parser =
-  (editor_comment <|> return ()) *>
+  try' editor_comment *>
   skip_many empty_line *>
   spaced_list log_entryp
 
