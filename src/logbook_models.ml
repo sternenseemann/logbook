@@ -1,4 +1,4 @@
-open Jg_types
+open Jingoo.Jg_types
 
 let string_of_date (y, m, d) =
   string_of_int y ^ "-" ^ string_of_int m ^ "-" ^ string_of_int d

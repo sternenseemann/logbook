@@ -1,6 +1,7 @@
 open Stdlib
 open Lwt.Infix
 open Cow
+open Jingoo
 
 let parse_file f =
   let file_parser c =
