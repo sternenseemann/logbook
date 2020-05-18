@@ -1,0 +1,3 @@
+(install
+  (section man)
+  (files logbook.1 logbook-log.7 logbook-template.7))
