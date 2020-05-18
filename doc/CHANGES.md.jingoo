@@ -1,9 +1,0 @@
-{% autoescape false %}
-{% for entry in entries %}
-{{ entry.summary }} {{ entry.date }}
-------------------------------------
-{% for item in entry.items %}
-* {{ item.title }}:
-  {{ item.text }}{% endfor %}
-{% endfor %}
-{% endautoescape %}
