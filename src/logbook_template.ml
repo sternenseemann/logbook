@@ -11,8 +11,12 @@ let template = "<!doctype html>
       {% autoescape false %}{{ entry.summary }}
       <ul>{% for item in entry.items %}
         <li>
-          {{ item.title }}
-          {{ item.text }}
+          <div>
+            {{ item.title }}
+          </div>
+          <div>
+            {{ item.text }}
+          </div>
         </li>{% endfor %}{% endautoescape %}
       </ul>
     </article>{% endfor %}
