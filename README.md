@@ -20,7 +20,7 @@ Here is a short example of a `log` file:
     Today was just an average day. I haven't been too productive.
 
     + Worked on `logbook` again.
-      Mostly spend time on writing user documentation which
+      Mostly spent time on writing user documentation which
       was more or less non-existent before.
     * Procrastinated a lot.
       Was very tired and got almost nothing done for university.
@@ -178,6 +178,7 @@ For an example template see [`src/logbook_template.ml`](./src/logbook_template.m
 
 A little todo list, might get to it at some point.
 
+* [x] man page
 * [ ] Improve error messages of parser
 * [ ] General Comments
 * [ ] CSS support
