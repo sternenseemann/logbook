@@ -1,0 +1,75 @@
+.TH LOGBOOK-TEMPLATE 7
+.SH SYNOPSIS
+\fItemplate\fB.jingoo\fR
+.SH DESCRIPTION
+The output of
+.BR logbook (1)
+can be modified using Jingoo templates.
+.SH MODELS
+.BR logbook (1)
+exposes the following variables that can be used in a template:
+.IP \[bu] 2
+\fBtitle\fR: The title of the document set from the
+.BR logbook (1)
+command line. Mostly intended for the \fB<title>\fR tag, but can be reused.
+.IP \[bu] 2
+\fBentries\fR: A list of objects representing the log entries of the processed file.
+It contains the following fields:
+.RS
+.IP \[bu] 2
+\fBdate\fR: The date of the entry as a string in the form \fBYYYY-MM-DD\fR.
+.IP \[bu] 2
+\fBsummary\fR: The initial summary text block of the entry as a string which
+might already have been preprocessed by a markup like markdown.
+.IP \[bu] 2
+\fBitems\fR: A list of objects representing the entry's items. It contains the
+following fields:
+.RS
+.IP \[bu] 2
+\fBtitle\fR: The title (in heading) of the item as a string. Might already have been
+preprocessed by a markup.
+.IP \[bu] 2
+\fBtext\fR: The text block of the item as a string. Might already have been
+preprocessed by a markup.
+.RE
+.RE
+.SH SYNTAX
+For information about Jingoo template syntax refer to the Jingoo documentation.
+.SH EXAMPLE
+A simple template is below. It uses two nested for loops to process the two given lists.
+Also we disable autoescaping for the variables that can contain HTML if they have been
+preprocessed using a markup like markdown.
+.PP
+.nf
+.RS
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{ title }}</title>
+  </head>
+  <body>
+    <main>
+      {% for entry in entries %}
+      <article>
+        <h2>{{ entry.date }}</h2>
+        {% autoescape false %}
+        {{ entry.summary }}
+        <ul>{% for item in entry.items %}
+          <li>
+            {{ item.title }}
+            {{ item.text }}
+          </li>
+          {% endfor %}
+          {% endautoescape %}
+        </ul>
+      </article>
+      {% endfor %}
+    </main>
+  </body>
+</html>
+.RE
+.fi
+.SH SEE ALSO
+.BR logbook (1),
+.BR logbook-log (7)
