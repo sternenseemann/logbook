@@ -1,0 +1,17 @@
+{0 logbook}
+
+The [logbook] package includes a command line utility and a OCaml library for dealing with [log] files.
+
+{1 log files}
+
+[log] is a file format for personal diary or log keeping. For detailed information on the
+[log] file format see [man 7 logbook-log] or the [README.md] distributed with this package.
+
+{1 Log}
+
+The {!module-Log} module allows for parsing and manipulation of an OCaml representation of [log] files.
+
+{1 logbook}
+
+For usage information for the [logbook] utility that can generate HTML from [log] files see [man logbook]
+or the [README.md] distributed with this package.

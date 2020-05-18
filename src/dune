@@ -9,3 +9,6 @@
   (public_name logbook)
   (libraries logbook lwt lwt.unix jingoo cow)
   (modules logbook logbook_template logbook_models))
+
+(documentation
+  (mld_files index))

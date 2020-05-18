@@ -10,7 +10,7 @@ private information.
 `logbook` also provides a module `Log` for parsing `log` files and performing
 basic operations on an OCaml representation of a `log` file. It is currently
 mostly useful for reading `log` files and processing its information in some
-way.
+way. For details see the [API documentation](https://sternenseemann.github.io/logbook/doc/logbook/index.html).
 
 `logbook` uses a simplified version of the `log` format, which was originally
 [specified by Profpatsch](https://gist.github.com/Profpatsch/092ff68fa267b9fa0ccbe13e98149b21).

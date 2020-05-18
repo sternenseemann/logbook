@@ -52,8 +52,6 @@ val log_parser : (string log) Angstrom.t
     to apply a specific markup to a freshly parsed log file. *)
 val apply_markup : ('a -> 'b) -> 'a log -> 'b log
 
-(** {2 Log Building} *)
-
 (*---------------------------------------------------------------------------
    Copyright (c) 2017 sternenseemann
 
