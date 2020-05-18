@@ -1,0 +1,99 @@
+.TH LOGBOOK 1
+.SH NAME
+logbook \- a tool for keeping a personal log
+.SH SYNOPSIS
+.B logbook
+[\fB\-\-file\fR \fIPATH\fR]
+[\fB\-\-public\fR | \fB\-\-semi\-private\fR | \fB\-\-private\fR]
+[\fB\-\-markdown\fR | \fB\-\-paragraph\fR]
+[\fB\-\-template \fIPATH\fR]
+[\fB\-\-title \fISTRING\fR]
+.SH DESCRIPTION
+.B logbook
+generates a HTML page from a
+.BR logbook-log (7)
+file including its content based on given privacy settings and prints it to standard output.
+.SH OPTIONS
+.TP
+.B \-\-file \fIPATH\fR
+Use \fIPATH\fR as input log file instead of standard input.
+.TP
+.B \-\-public
+Sets the privacy level to public meaning that only log items with this privacy level
+(signified using a leading \fB+\fR) will be included in the output HTML. Shouldn't be given
+at the same time as \fB\-\-semi-private\fR or \fB\-\-private\fR (the last one given will
+overwrite the previous ones).
+.TP
+.B \-\-semi-private
+Sets the privacy level to semi-private meaning that only semi-private and public log items
+will be included in the output HTML (signified using \fB*\fR and \fB+\fR respectively).
+The semi-private level is typically used when creating a rendering of a log file for
+trusted individuals. This option shouldn't be given at same time as \fB\-\-public\fR or
+\fB\-\-private\fR (the last one given will overwrite the previous ones).
+.TP
+.B \-\-private
+Sets the privacy level to private which means that all log items will be included in the
+output HTML. This level is typically used for the author(s) of the log file.
+Private log items are signified using \fB+\fR. This option shouldn't be given at same
+time as \fB\-\-public\fR or \fB\-\-semi-private\fR (the last one given will overwrite
+the previous ones).
+.TP
+.B \-\-markdown
+Enables markdown markup. When this is enabled, \fBlogbook\fR will convert any text in the
+log file to HTML using markdown. This happens individually for every text block.
+.TP
+.B \-\-paragraph
+Enables a "fake markup" which passes trough the text without processing it in any way
+except for wrapping it with \fB<p>\fI...\fB</p>\fR. This emulates a behavior of markdown
+which also wraps normal text blocks with an HTML paragraph and is intended to make
+templates written with markdown markup in mind work better with plain text log files.
+This was the default behavior of \fBlogbook\fR 0.2 and prior, so \fB\-\-paragraph\fR
+can be used to restore the old behavior. Shouldn't be set at the same time as
+\fB\-\-markdown\fR (the option set last will overwrite the previous one).
+.TP
+.B \-\-template \fIPATH\fR
+Read the Jingoo template to be used for HTML generation from \fIPATH\fR instead of using
+the default one. Jingoo is a template engine for OCaml which is almost compatible with
+Python's Jinja2. For more information read
+.BR logbook-template (7).
+.TP
+.B \-\-title \fISTRING\fR
+Set the \fBtitle\fR variable for the template to \fISTRING\fR. In the default template
+and in typical cases it is used to set the content of the HTML page's \fB<title>\fR tag.
+.SH EXAMPLES
+Read \fBmy.log\fR and generate HTML page with public privacy level:
+.PP
+.nf
+.RS
+logbook \-\-file my.log \-\-public
+.RE
+.fi
+.PP
+Write a markdown rendering of \fBmy.log\fR to \fBfriends.html\fR with privacy
+level semi private titled "my log".
+.PP
+.nf
+.RS
+logbook \-\-file my.log \-\-semi-private \-\-title "my log" \-\-markdown > friends.html
+.RE
+.fi
+.PP
+Read a remote log file using ssh and generate a private privacy level rendering of it
+using a custom template
+.PP
+.nf
+.RS
+ssh foo@bar "cat /path/to/my.log" | logbook --private --template custom.jingoo
+.RE
+.fi
+.PP
+Generate an HTML output for the \fBlogbook\fR changelog:
+.PP
+.nf
+.RS
+logbook --file /path/to/doc/logbook/CHANGES.log --markdown > CHANGES.html
+.RE
+.fi
+.SH SEE ALSO
+.BR logbook-log (7),
+.BR logbook-template (7)
