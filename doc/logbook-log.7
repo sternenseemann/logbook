@@ -1,0 +1,159 @@
+.TH LOGBOOK-LOG 7
+.SH NAME
+\fBlog\fR \- a file format for keeping a personal log or diary
+.SH SYNOPSIS
+\fIfile\fB.log\fR
+.SH DESCRIPTION
+A \fBlog\fR file contains one or more \fBentries\fR which each are associated
+with a specific \fBdate\fR. There shouldn't be more than one entry for a \fBdate\fR.
+Every \fBentry\fR consists of the mentioned \fBdate\fR, a \fBsummary\fR and zero or
+more \fBitems\fR.
+.PP
+Every \fBitem\fR consists of a \fBprivacy level\fR which is indicated by a preceding
+symbol which determines which individuals may access this item, its \fBtitle\fR and
+its \fBtext\fR.
+.PP
+\fBsummary\fR, \fBtitle\fR and \fBtext\fR may contain markup of any kind, as long
+as it doesn't interfer with the parsing of the log format.
+.SH PRIVACY LEVELS
+\fBlog\fR knows three different \fBprivacy levels\fR which indicate by whom an item
+may or may not be accessed:
+.IP \[bu] 2
+\fBpublic\fR: This privacy level, signified by a \fB+\fR, indicates that anyone may
+access this item.
+.IP \[bu] 2
+\fBsemi private\fR: This privacy level, signified by a \fB*\fR, indicates that only
+trusted individuals (e. g. friends, family, ...) and the author of the log file may
+access this item.
+.IP \[bu] 2
+\fBprivate\fR: This privacy level, signified by a \fB-\fR, indicates that only the
+author of the log file may access the item.
+.PP
+When processing a \fBlog\fR file the specified privacy levels must be respected in
+order to prevent leaking private information to non-trusted individuals or
+services, applications etc.
+.PP
+The privacy levels also double up as an indication of the level of access to
+log items an individual or application has. A privacy level then means "has access
+to level X and the less trustful levels":
+.IP \[bu] 2
+\fBpublic\fR: May only access public items.
+.IP \[bu] 2
+\fBsemi private\fR: May access semi private and public items.
+.IP \[bu] 2
+\fBprivate\fR: May access all items.
+.PP
+An example of this are the \fB\-\-private\fR, \fB\-\-semi\-private\fR and
+\fB\-\-public\fR options of
+.BR logbook (1).
+.SH FORMAT
+A \fBlog\fR file consists of multiple \fBentries\fR separated by zero or more
+empty lines. It uses unix line endings. An entry has the following format.
+.PP
+Every \fBentry\fR is initiated with a line containing \fBdate\fR of the format \fBYYYY-MM-DD\fR
+in brackets.
+.PP
+.nf
+.RS
+[YYYY-MM-DD]
+.RE
+.fi
+.PP
+This is then followed by a \fBsummary\fR which is an unindented block of text
+which is terminated by any number of empty lines or a \fBitem\fR. A \fBsummary\fR
+may contain any markup that doesn't interfer with the parsing of a log file.
+.PP
+.nf
+.RS
+Any number of lines as
+long as
+they don't contain
+any empty lines. What
+line breaks signify depends
+on the *markup* in **markdown**
+they'd be just normal spaces.
+.RE
+.fi
+.PP
+Next are zero or more \fBitems\fR. An \fBitem\fR is initiated by a \fBprivacy level\fR
+indicator which is either \fB+\fR, \fB*\fR or \fB-\fR, followed by a space. For the semantic
+meaning of the privacy levels see the section of the same name. After the indicator follows
+the item's \fBtitle\fR on the same line that is terminated by the line break.
+.PP
+Next is the item's \fBtext\fR which is a text block indented using 2 spaces. Both the \fBtext\fR
+and the \fBtitle\fR may contain any markup that doesn't mess with the parsing. The \fBtext\fR
+block is terminated by any following item or empty lines. After parsing \fBtext\fR may contain
+an empty line, however. This can be achieved by using a line which only contains 2 spaces \-
+a indented empty line so to say.
+.PP
+.nf
+.RS
++ Public Title
+  Any text
+  indented using 2 spaces
+* Semi Private Title
+  More text.
+
+
+- Private Title
+  New lines work as separator, too.
+.RE
+.fi
+.PP
+There may be any number of \fBentries\fR in any order,
+separated by any number of empty lines.
+.PP
+The \fBlog\fR format used by
+.BR logbook (1)
+is based on a specification by Profpatsch, but it has been simplified.
+The original specifications specified that item titles wouldn't be limited
+to a single line, but its own block of indent level 2, and the item text
+a block with indent level 4. This creates a lot of unsolvable issues when
+parsing, so it has been simplified.
+.SH EXAMPLE
+.nf
+[2020-05-18]
+.br
+Summary of the day. May
+.br
+span
+.br
+multiple lines.
+.PP
++ Title of a Public Entry
+.br
+  Some text that also may span multiple lines, but
+.br
+  must be indented using 2 spaces.
+.br
+- Title of a Private Entry
+.br
+  Its title and text won't be visible to anyone but
+.br
+  the author. Unfortunately it can't be hidden it from
+.br
+  the file and this one is included in a public man page...
+.PP
+[2020-05-17]
+.br
+An entry without any items.
+.PP
+[2020-05-16]
+.br
+Another entry.
+.PP
+* Title of a semi-private entry.
+.br
+  Some text, as usual.
+.br
++ ### Title of a Public entry using a markdown heading
+.br
+  Also the *text* may contain **markup** of any
+.br
+  [kind](https://github.com/sternenseemann/logbook)
+.fi
+.SH CREDITS
+Original idea and first specification by Profpatsch.
+.SH SEE ALSO
+.BR logbook (1),
+.BR logbook-template (7)
