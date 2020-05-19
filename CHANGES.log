@@ -1,3 +1,36 @@
+[2020-05-19]
+v0.3
+
++ Compatibility with newer dependencies
+  Fixes build for Jingoo >= 1.3.0 and Angstrom >= 0.14.0
++ Don't change text in no markup mode
+  Previously everything got wrapped with `<p>` and `</p>`
+  in order to emulate the behavior of markdown markup.
+  The old behavior can be restored using the new switch
+  `--paragraph`.
++ Allow empty lines in indented blocks
+  This allows for empty lines in item text blocks being
+  passed to the markup by using a lines only containing
+  2 spaces (i. e. an indented new line).
++ Allow custom templates to be used
+  A jingoo template can now be passed using `--template`
+  to be used instead of the default one.
++ Make `--file` option non-mandatory
+  If not given, `logbook` reads from stdin.
++ Improve default template
+  * Generate HTML `id`s in the default template.
+    This allows for linking to single entries using
+    `file.html#YYYY-MM-DD`.
+  * Put item title and text in separate `<div>`s. This
+    makes sure that there is at least line break distinguishing
+    them regardless of markup used.
++ Add `--title` option
+  Used to set the HTML `<title>` in the default template.
+  Also passed to custom templates.
++ Add man pages
+  logbook(1) for utility, logbook-log(7) for file format
+  and logbook-template(7) for templating information.
+
 [2020-04-24]
 v0.2
 
