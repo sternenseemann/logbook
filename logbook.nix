@@ -11,7 +11,10 @@ buildDunePackage rec {
   propagatedBuildInputs = [ ptime angstrom astring ];
 
   postBuild = "dune build @doc";
-  postInstall = "cp -r _build/default/_doc/_html $out/doc/logbook/html";
+  postInstall = ''
+    mkdir -p $out/doc/logbook/html
+    cp -r _build/default/_doc/_html/* $out/doc/logbook/html
+  '';
 
   useDune2 = true;
 }

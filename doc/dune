@@ -1,3 +1,13 @@
 (install
   (section man)
   (files logbook.1 logbook-log.7 logbook-template.7))
+
+(install
+  (section doc)
+  (files (CHANGES.html as html/CHANGES.html)))
+
+(rule
+  (target CHANGES.html)
+  (action
+    (chdir .. (system "%{deps} --public --markdown --file CHANGES.log > %{target}")))
+  (deps ../src/logbook.exe))
