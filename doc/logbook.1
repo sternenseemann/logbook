@@ -20,7 +20,7 @@ Use \fIPATH\fR as input log file instead of standard input.
 .TP
 .B \-\-public
 Sets the privacy level to public meaning that only log items with this privacy level
-(signified using a leading \fB+\fR) will be included in the output HTML. Shouldn't be given
+(signified using a leading \fB+\fR) will be included in the output HTML. Should not be given
 at the same time as \fB\-\-semi-private\fR or \fB\-\-private\fR (the last one given will
 overwrite the previous ones).
 .TP
@@ -28,13 +28,13 @@ overwrite the previous ones).
 Sets the privacy level to semi-private meaning that only semi-private and public log items
 will be included in the output HTML (signified using \fB*\fR and \fB+\fR respectively).
 The semi-private level is typically used when creating a rendering of a log file for
-trusted individuals. This option shouldn't be given at same time as \fB\-\-public\fR or
+trusted individuals. This option should not be given at same time as \fB\-\-public\fR or
 \fB\-\-private\fR (the last one given will overwrite the previous ones).
 .TP
 .B \-\-private
 Sets the privacy level to private which means that all log items will be included in the
 output HTML. This level is typically used for the author(s) of the log file.
-Private log items are signified using \fB+\fR. This option shouldn't be given at same
+Private log items are signified using \fB+\fR. This option should not be given at same
 time as \fB\-\-public\fR or \fB\-\-semi-private\fR (the last one given will overwrite
 the previous ones).
 .TP
@@ -48,7 +48,7 @@ except for wrapping it with \fB<p>\fI...\fB</p>\fR. This emulates a behavior of 
 which also wraps normal text blocks with an HTML paragraph and is intended to make
 templates written with markdown markup in mind work better with plain text log files.
 This was the default behavior of \fBlogbook\fR 0.2 and prior, so \fB\-\-paragraph\fR
-can be used to restore the old behavior. Shouldn't be set at the same time as
+can be used to restore the old behavior. Should not be set at the same time as
 \fB\-\-markdown\fR (the option set last will overwrite the previous one).
 .TP
 .B \-\-template \fIPATH\fR

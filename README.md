@@ -33,7 +33,7 @@ For more details read on!
 
 ## (Post-)Privacy mechanism
 
-The `log` format differenciates between three privacy levels, which can be used
+The `log` format differentiates between three privacy levels, which can be used
 to control what parts of your `log` file is shared with whom. These levels can
 be applied to the items of a `log` entry and indicate to which group of people
 the respective items are allowed to be displayed.
@@ -124,7 +124,7 @@ a block indented using 2 spaces, it uses a block indented by 2 spaces for the ti
 the item's text would be indented using 4 spaces.
 
 While it allows for multi-line titles, it has the major drawback that — when using
-indentation-sensitive markup — it can't be differenciated between a line of the title
+indentation-sensitive markup — it can't be differentiated between a line of the title
 which is indented using 2 spaces and the beginning of the 4 space indented block of
 the item text. I decided to rework this in order to avoid such cases altogether.
 

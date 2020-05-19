@@ -5,16 +5,16 @@
 \fIfile\fB.log\fR
 .SH DESCRIPTION
 A \fBlog\fR file contains one or more \fBentries\fR which each are associated
-with a specific \fBdate\fR. There shouldn't be more than one entry for a \fBdate\fR.
+with a specific \fBdate\fR. There should not be more than one entry for a \fBdate\fR.
 Every \fBentry\fR consists of the mentioned \fBdate\fR, a \fBsummary\fR and zero or
 more \fBitems\fR.
 .PP
 Every \fBitem\fR consists of a \fBprivacy level\fR which is indicated by a preceding
-symbol which determines which individuals may access this item, its \fBtitle\fR and
+symbol which determines which individuals may access it, its \fBtitle\fR and
 its \fBtext\fR.
 .PP
 \fBsummary\fR, \fBtitle\fR and \fBtext\fR may contain markup of any kind, as long
-as it doesn't interfer with the parsing of the log format.
+as it does not interfere with the parsing of the log format.
 .SH PRIVACY LEVELS
 \fBlog\fR knows three different \fBprivacy levels\fR which indicate by whom an item
 may or may not be accessed:
@@ -48,9 +48,9 @@ An example of this are the \fB\-\-private\fR, \fB\-\-semi\-private\fR and
 .BR logbook (1).
 .SH FORMAT
 A \fBlog\fR file consists of multiple \fBentries\fR separated by zero or more
-empty lines. It uses unix line endings. An entry has the following format.
+empty lines. It uses unix line endings. An entry has the following format:
 .PP
-Every \fBentry\fR is initiated with a line containing \fBdate\fR of the format \fBYYYY-MM-DD\fR
+Every \fBentry\fR is initiated with a line containing a \fBdate\fR of the format \fBYYYY-MM-DD\fR
 in brackets.
 .PP
 .nf
@@ -60,8 +60,8 @@ in brackets.
 .fi
 .PP
 This is then followed by a \fBsummary\fR which is an unindented block of text
-which is terminated by any number of empty lines or a \fBitem\fR. A \fBsummary\fR
-may contain any markup that doesn't interfer with the parsing of a log file.
+which is terminated by any number of empty lines or an \fBitem\fR. A \fBsummary\fR
+may contain any markup that does not interfere with the parsing of a log file.
 .PP
 .nf
 .RS
@@ -81,10 +81,10 @@ meaning of the privacy levels see the section of the same name. After the indica
 the item's \fBtitle\fR on the same line that is terminated by the line break.
 .PP
 Next is the item's \fBtext\fR which is a text block indented using 2 spaces. Both the \fBtext\fR
-and the \fBtitle\fR may contain any markup that doesn't mess with the parsing. The \fBtext\fR
+and the \fBtitle\fR may contain any markup that does not mess with the parsing. The \fBtext\fR
 block is terminated by any following item or empty lines. After parsing \fBtext\fR may contain
 an empty line, however. This can be achieved by using a line which only contains 2 spaces \-
-a indented empty line so to say.
+an indented empty line so to say.
 .PP
 .nf
 .RS
@@ -106,8 +106,8 @@ separated by any number of empty lines.
 The \fBlog\fR format used by
 .BR logbook (1)
 is based on a specification by Profpatsch, but it has been simplified.
-The original specifications specified that item titles wouldn't be limited
-to a single line, but its own block of indent level 2, and the item text
+Profpatsch allowed that item titles would not be limited
+to a single line, but be its own block of indent level 2, and the item text
 a block with indent level 4. This creates a lot of unsolvable issues when
 parsing, so it has been simplified.
 .SH EXAMPLE
