@@ -5,7 +5,7 @@
   ---------------------------------------------------------------------------*)
 
 (** OCaml representation and parsing of the
-    {{:https://gist.github.com/Profpatsch/092ff68fa267b9fa0ccbe13e98149b21}log format}.
+    {{:https://github.com/sternenseemann/logbook#the-log-format}log format}.
 
     {e %%VERSION%% — {{:%%PKG_HOMEPAGE%% }homepage}} *)
 
