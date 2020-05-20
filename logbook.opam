@@ -3,6 +3,15 @@ maintainer: "sternenseemann <post@lukasepple.de>"
 authors: ["sternenseemann <post@lukasepple.de>"]
 homepage: "https://github.com/sternenseemann/logbook"
 doc: "https://sternenseemann.github.io/logbook/doc"
+synopsis: "A tool for keeping a personal log"
+description: """
+logbook is a tool for generating HTML renderings of
+log files, a file format for a personal log/diary.
+By restricting who may access what parts of entries
+renderings can be shared without leaking private
+information. This package also includes a module
+Log for parsing and manipulating log files.
+"""
 license: "ISC"
 dev-repo: "https://github.com/sternenseemann/logbook.git"
 bug-reports: "https://github.com/sternenseemann/logbook/issues"
