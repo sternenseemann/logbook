@@ -1,7 +1,7 @@
 (library
   (name log)
   (public_name logbook)
-  (libraries bytes ptime angstrom astring)
+  (libraries ptime angstrom astring)
   (modules log))
 
 (executable

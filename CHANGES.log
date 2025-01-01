@@ -1,3 +1,18 @@
+[2025-01-01]
+v0.3.1 (wip)
+
++ Port build system to Dune 3
+  * We need to set `version` manually, so that `dune`
+    won't try to run `git`.
+  * The `bytes` module (from base) can no longer be
+    specified manually. This broke with the upgrade
+    from OCaml 4.14 to 5.1, but I don't know precisely
+    when it stopped working nor whether it was ever
+    necessary.
+  * The extra logic to install e.g. the rendered
+    changelog can be removed now, as dune seems
+    to do this by default.
+
 [2020-05-20]
 v0.3
 
